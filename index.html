@@ -8,6 +8,7 @@
   <style>
     body { font-family: system-ui, -apple-system, sans-serif; }
     .hero-bg { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); }
+    .agent-step { transition: all 0.4s ease; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -15,59 +16,66 @@
   <header class="hero-bg text-white py-24 text-center">
     <div class="max-w-4xl mx-auto px-6">
       <h1 class="text-6xl font-bold tracking-tighter mb-6">One prompt.<br>A store that runs itself forever.</h1>
-      <p class="text-2xl mb-8">Grok-powered autonomous agents launch, market, sell, and optimize Shopify stores 24/7.</p>
-      <p class="text-lg mb-10">Grok primary + Claude fallback. Starting in clean beauty. Expanding to cybersecurity and autonomous marketplace stalkers.</p>
-      <div class="flex justify-center gap-4">
-        <a href="#demo" class="bg-white text-indigo-700 px-10 py-4 rounded-2xl text-xl font-semibold hover:bg-gray-100">Watch Demo Video</a>
-        <a href="#beta" class="bg-transparent border-2 border-white text-white px-10 py-4 rounded-2xl text-xl font-semibold hover:bg-white hover:text-indigo-700">Join Beta — 50% Off</a>
-      </div>
-      <p class="text-sm mt-6 opacity-90">Early stores projecting $2,400–$3,600 first-week revenue</p>
+      <p class="text-2xl mb-10">Grok-powered autonomous agents launch, market, sell, and optimize Shopify stores 24/7.</p>
+      <a href="#demo" class="bg-white text-indigo-700 px-10 py-4 rounded-2xl text-xl font-semibold hover:bg-gray-100">Watch the Swarm in Action</a>
     </div>
   </header>
 
-  <!-- INTERACTIVE DEMO -->
+  <!-- INTERACTIVE SWARM DEMO -->
   <section id="demo" class="py-20 bg-white">
     <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-4xl font-bold mb-6">See the Swarm in Action</h2>
-      <div class="bg-gray-100 rounded-3xl p-8 max-w-2xl mx-auto">
-        <p class="text-gray-600 mb-4">Type a store idea below and watch the agents work (live simulation):</p>
-        <input id="demoInput" type="text" placeholder="clean beauty skincare tools" class="w-full p-4 rounded-2xl border mb-4 text-lg">
-        <button onclick="runDemo()" class="bg-indigo-600 text-white px-10 py-4 rounded-2xl text-lg font-semibold">Run the Swarm</button>
-        <div id="demoOutput" class="mt-8 text-left bg-white p-6 rounded-2xl hidden"></div>
+      <h2 class="text-4xl font-bold mb-6">Watch the Swarm Run Live</h2>
+      <div class="bg-gray-900 text-white rounded-3xl p-8 max-w-2xl mx-auto">
+        <p class="mb-4 text-gray-400">Type any store idea below</p>
+        <input id="demoInput" type="text" placeholder="clean beauty skincare tools" class="w-full bg-gray-800 text-white p-4 rounded-2xl mb-6 text-lg">
+        <button onclick="runSwarm()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-12 py-4 rounded-2xl text-xl font-semibold">Run the Swarm</button>
+        
+        <div id="swarmOutput" class="hidden mt-10 text-left">
+          <div class="space-y-6">
+            <div id="step1" class="agent-step flex items-center gap-4 bg-gray-800 p-4 rounded-2xl">
+              <span class="text-green-400 font-bold">Planner</span>
+              <span class="flex-1 text-sm">Setting aggressive 7-day goals...</span>
+            </div>
+            <div id="step2" class="agent-step flex items-center gap-4 bg-gray-800 p-4 rounded-2xl">
+              <span class="text-blue-400 font-bold">Sourcer</span>
+              <span class="flex-1 text-sm">Finding winning products (380%+ margins)...</span>
+            </div>
+            <div id="step3" class="agent-step flex items-center gap-4 bg-gray-800 p-4 rounded-2xl">
+              <span class="text-purple-400 font-bold">Coder</span>
+              <span class="flex-1 text-sm">Building Shopify store in real time...</span>
+            </div>
+            <div id="step4" class="agent-step flex items-center gap-4 bg-gray-800 p-4 rounded-2xl">
+              <span class="text-orange-400 font-bold">Marketer</span>
+              <span class="flex-1 text-sm">Launching ads (5.4x ROAS projected)...</span>
+            </div>
+            <div id="step5" class="agent-step flex items-center gap-4 bg-gray-800 p-4 rounded-2xl">
+              <span class="text-pink-400 font-bold">Optimizer</span>
+              <span class="flex-1 text-sm">Running A/B tests & inventory alerts...</span>
+            </div>
+            <div id="step6" class="agent-step flex items-center gap-4 bg-gray-800 p-4 rounded-2xl">
+              <span class="text-cyan-400 font-bold">Support</span>
+              <span class="flex-1 text-sm">Customer replies ready 24/7...</span>
+            </div>
+          </div>
+          <div id="finalResult" class="mt-8 bg-green-900 p-6 rounded-2xl text-center text-green-400 font-bold text-xl hidden">
+            Store is 78% live • First-week projection: $2,800<br>
+            <span class="text-sm text-green-300">Agents still optimizing...</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- TABBED HOW IT WORKS -->
+  <!-- IMPROVED HOW EVERCART WORKS -->
   <section class="py-20 bg-gray-100">
     <div class="max-w-6xl mx-auto px-6">
       <h2 class="text-4xl font-bold text-center mb-12">How EverCart AI Works</h2>
-      <div class="tabs flex justify-center gap-4 mb-8">
-        <button onclick="showTab(0)" class="tab-btn active px-8 py-3 rounded-full bg-white shadow">Step 1: Prompt</button>
-        <button onclick="showTab(1)" class="tab-btn px-8 py-3 rounded-full bg-white shadow">Step 2: Swarm Runs</button>
-        <button onclick="showTab(2)" class="tab-btn px-8 py-3 rounded-full bg-white shadow">Step 3: You Win</button>
+      <div class="flex flex-wrap justify-center gap-4 mb-10">
+        <button onclick="showTab(0)" class="tab-btn active px-8 py-3 rounded-2xl bg-white shadow font-medium">Prompt</button>
+        <button onclick="showTab(1)" class="tab-btn px-8 py-3 rounded-2xl bg-white shadow font-medium">Swarm Runs</button>
+        <button onclick="showTab(2)" class="tab-btn px-8 py-3 rounded-2xl bg-white shadow font-medium">You Win</button>
       </div>
-      <div id="tabContent" class="text-center">Content loads here...</div>
-    </div>
-  </section>
-
-  <!-- TRACTION + TESTIMONIALS -->
-  <section class="py-16 bg-white">
-    <div class="max-w-4xl mx-auto px-6">
-      <h2 class="text-4xl font-bold text-center mb-12">Early Traction</h2>
-      <div class="grid grid-cols-3 gap-8 text-center">
-        <div><div class="text-5xl font-bold">$3,400</div><p class="opacity-70">Projected first-week revenue</p></div>
-        <div><div class="text-5xl font-bold">5.4x</div><p class="opacity-70">Average ROAS</p></div>
-        <div><div class="text-5xl font-bold">78%</div><p class="opacity-70">Stores live in beta</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- VISION -->
-  <section class="py-20 bg-gray-900 text-white">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-4xl font-bold mb-6">Built for Scale</h2>
-      <p class="text-xl mb-12">Starting in clean beauty. Expanding to cybersecurity compliance tools and autonomous marketplace stalkers. Data flywheel from real store performance makes agents smarter every week.</p>
+      <div id="tabContent" class="bg-white rounded-3xl p-10 shadow"></div>
     </div>
   </section>
 
@@ -85,22 +93,35 @@
   </footer>
 
   <script>
-    function runDemo() {
-      const input = document.getElementById('demoInput').value || "clean beauty skincare tools";
-      document.getElementById('demoOutput').classList.remove('hidden');
-      document.getElementById('demoOutput').innerHTML = `
-        <p class="font-bold">Swarm Running for: ${input}</p>
-        <p class="mt-4">Planner: Setting goals...</p>
-        <p>Sourcer: Finding 5 winning products...</p>
-        <p>Marketer: Launching ads (5.4x ROAS projected)...</p>
-        <p class="text-green-600 font-bold mt-6">Store 78% live — first-week projection $2,800</p>
-      `;
+    function runSwarm() {
+      const output = document.getElementById('swarmOutput');
+      output.classList.remove('hidden');
+      
+      const steps = ['step1','step2','step3','step4','step5','step6'];
+      let i = 0;
+      
+      const interval = setInterval(() => {
+        if (i < steps.length) {
+          document.getElementById(steps[i]).style.backgroundColor = '#1f2937';
+          i++;
+        } else {
+          clearInterval(interval);
+          document.getElementById('finalResult').classList.remove('hidden');
+        }
+      }, 800);
     }
 
     function showTab(n) {
-      // Simple tab simulation
-      document.getElementById('tabContent').innerHTML = ['Prompt step content', 'Swarm running content', 'Revenue collection content'][n];
+      const contents = [
+        `<h3 class="text-2xl font-bold mb-4">Step 1: One Prompt</h3><p class="text-gray-600">You type a single idea. The Orchestrator takes over instantly.</p>`,
+        `<h3 class="text-2xl font-bold mb-4">Step 2: 6 Agents Run</h3><p class="text-gray-600">Planner, Coder, Sourcer, Marketer, Optimizer, and Support work in parallel using Grok + Claude.</p>`,
+        `<h3 class="text-2xl font-bold mb-4">Step 3: You Win</h3><p class="text-gray-600">Store goes live. Weekly reports arrive. Revenue rolls in. You do almost nothing.</p>`
+      ];
+      document.getElementById('tabContent').innerHTML = contents[n];
     }
+
+    // Auto-load first tab
+    window.onload = () => showTab(0);
   </script>
 </body>
 </html>

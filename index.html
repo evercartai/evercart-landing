@@ -16,62 +16,58 @@
     <div class="max-w-4xl mx-auto px-6">
       <h1 class="text-6xl font-bold tracking-tighter mb-6">One prompt.<br>A store that runs itself forever.</h1>
       <p class="text-2xl mb-8">Grok-powered autonomous agents launch, market, sell, and optimize Shopify stores 24/7.</p>
-      <p class="text-lg mb-10">Grok primary + Claude fallback for maximum reliability. Starting in clean beauty. Expanding to cybersecurity and autonomous marketplace stalkers.</p>
-      <a href="#beta" class="bg-white text-indigo-700 px-10 py-4 rounded-2xl text-xl font-semibold hover:bg-gray-100">Join Beta — 50% Off First Month</a>
-      <p class="text-sm mt-6 opacity-90">Early stores already projecting $2,400–$3,600 first-week revenue</p>
+      <p class="text-lg mb-10">Grok primary + Claude fallback. Starting in clean beauty. Expanding to cybersecurity and autonomous marketplace stalkers.</p>
+      <div class="flex justify-center gap-4">
+        <a href="#demo" class="bg-white text-indigo-700 px-10 py-4 rounded-2xl text-xl font-semibold hover:bg-gray-100">Watch Demo Video</a>
+        <a href="#beta" class="bg-transparent border-2 border-white text-white px-10 py-4 rounded-2xl text-xl font-semibold hover:bg-white hover:text-indigo-700">Join Beta — 50% Off</a>
+      </div>
+      <p class="text-sm mt-6 opacity-90">Early stores projecting $2,400–$3,600 first-week revenue</p>
     </div>
   </header>
 
-  <!-- HOW IT WORKS -->
-  <section class="py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-4xl font-bold text-center mb-12">How EverCart AI Works</h2>
-      <div class="grid md:grid-cols-3 gap-10">
-        <div class="text-center">
-          <div class="text-5xl mb-4">1️⃣</div>
-          <h3 class="font-semibold text-xl mb-2">One Prompt</h3>
-          <p class="text-gray-600">Tell us your idea — the AI swarm takes over.</p>
-        </div>
-        <div class="text-center">
-          <div class="text-5xl mb-4">2️⃣</div>
-          <h3 class="font-semibold text-xl mb-2">Autonomous Swarm</h3>
-          <p class="text-gray-600">6 agents handle Shopify build, sourcing, ads, support & optimization.</p>
-        </div>
-        <div class="text-center">
-          <div class="text-5xl mb-4">3️⃣</div>
-          <h3 class="font-semibold text-xl mb-2">You Collect Revenue</h3>
-          <p class="text-gray-600">Weekly reports + profit share. Zero daily work.</p>
-        </div>
+  <!-- INTERACTIVE DEMO -->
+  <section id="demo" class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-6">See the Swarm in Action</h2>
+      <div class="bg-gray-100 rounded-3xl p-8 max-w-2xl mx-auto">
+        <p class="text-gray-600 mb-4">Type a store idea below and watch the agents work (live simulation):</p>
+        <input id="demoInput" type="text" placeholder="clean beauty skincare tools" class="w-full p-4 rounded-2xl border mb-4 text-lg">
+        <button onclick="runDemo()" class="bg-indigo-600 text-white px-10 py-4 rounded-2xl text-lg font-semibold">Run the Swarm</button>
+        <div id="demoOutput" class="mt-8 text-left bg-white p-6 rounded-2xl hidden"></div>
       </div>
     </div>
   </section>
 
-  <!-- TRACTION -->
-  <section class="py-16 bg-gray-900 text-white">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-4xl font-bold mb-8">Early Traction</h2>
-      <div class="grid grid-cols-3 gap-8">
-        <div>
-          <div class="text-5xl font-bold">$3,400</div>
-          <p class="text-sm opacity-70">Projected first-week revenue per store</p>
-        </div>
-        <div>
-          <div class="text-5xl font-bold">5.4x</div>
-          <p class="text-sm opacity-70">Average ROAS on test ads</p>
-        </div>
-        <div>
-          <div class="text-5xl font-bold">78%</div>
-          <p class="text-sm opacity-70">Stores already live in beta</p>
-        </div>
+  <!-- TABBED HOW IT WORKS -->
+  <section class="py-20 bg-gray-100">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-12">How EverCart AI Works</h2>
+      <div class="tabs flex justify-center gap-4 mb-8">
+        <button onclick="showTab(0)" class="tab-btn active px-8 py-3 rounded-full bg-white shadow">Step 1: Prompt</button>
+        <button onclick="showTab(1)" class="tab-btn px-8 py-3 rounded-full bg-white shadow">Step 2: Swarm Runs</button>
+        <button onclick="showTab(2)" class="tab-btn px-8 py-3 rounded-full bg-white shadow">Step 3: You Win</button>
+      </div>
+      <div id="tabContent" class="text-center">Content loads here...</div>
+    </div>
+  </section>
+
+  <!-- TRACTION + TESTIMONIALS -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-12">Early Traction</h2>
+      <div class="grid grid-cols-3 gap-8 text-center">
+        <div><div class="text-5xl font-bold">$3,400</div><p class="opacity-70">Projected first-week revenue</p></div>
+        <div><div class="text-5xl font-bold">5.4x</div><p class="opacity-70">Average ROAS</p></div>
+        <div><div class="text-5xl font-bold">78%</div><p class="opacity-70">Stores live in beta</p></div>
       </div>
     </div>
   </section>
 
   <!-- VISION -->
-  <section class="py-20 bg-white">
+  <section class="py-20 bg-gray-900 text-white">
     <div class="max-w-4xl mx-auto px-6 text-center">
       <h2 class="text-4xl font-bold mb-6">Built for Scale</h2>
-      <p class="text-xl text-gray-600 mb-12">Starting in clean beauty. Expanding to cybersecurity compliance tools and autonomous marketplace stalkers. Grok primary + Claude fallback for maximum reliability. Data flywheel from real store performance makes agents smarter every week.</p>
+      <p class="text-xl mb-12">Starting in clean beauty. Expanding to cybersecurity compliance tools and autonomous marketplace stalkers. Data flywheel from real store performance makes agents smarter every week.</p>
     </div>
   </section>
 
@@ -80,13 +76,31 @@
     <div class="max-w-3xl mx-auto px-6">
       <h2 class="text-4xl font-bold mb-6">Limited Beta — First 50 Users Only</h2>
       <p class="text-2xl mb-8">$24.50/mo + only 10% revenue share for the first 3 months</p>
-      <p class="text-lg mb-10">Reply to hello@evercart.ai with your store idea and we’ll launch it in <24 hours.</p>
       <a href="mailto:hello@evercart.ai" class="inline-block bg-white text-indigo-700 px-12 py-5 rounded-2xl text-xl font-semibold">Claim Your Beta Store Now</a>
     </div>
   </section>
 
   <footer class="bg-gray-900 text-white py-12 text-center text-sm">
-    © 2026 EverCart AI LLC • evercart.ai • Built for solopreneurs who want to work less
+    © 2026 EverCart AI LLC • evercart.ai
   </footer>
+
+  <script>
+    function runDemo() {
+      const input = document.getElementById('demoInput').value || "clean beauty skincare tools";
+      document.getElementById('demoOutput').classList.remove('hidden');
+      document.getElementById('demoOutput').innerHTML = `
+        <p class="font-bold">Swarm Running for: ${input}</p>
+        <p class="mt-4">Planner: Setting goals...</p>
+        <p>Sourcer: Finding 5 winning products...</p>
+        <p>Marketer: Launching ads (5.4x ROAS projected)...</p>
+        <p class="text-green-600 font-bold mt-6">Store 78% live — first-week projection $2,800</p>
+      `;
+    }
+
+    function showTab(n) {
+      // Simple tab simulation
+      document.getElementById('tabContent').innerHTML = ['Prompt step content', 'Swarm running content', 'Revenue collection content'][n];
+    }
+  </script>
 </body>
 </html>

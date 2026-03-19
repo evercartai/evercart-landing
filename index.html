@@ -35,7 +35,7 @@
     </div>
   </section>
 
-  <!-- SPICED UP HOW EVERCART WORKS -->
+  <!-- FULL 3-CARD HOW EVERCART WORKS -->
   <section id="how" class="py-20 bg-gray-100">
     <div class="max-w-6xl mx-auto px-6">
       <h2 class="text-4xl font-bold text-center mb-12">How EverCart AI Works</h2>
@@ -56,4 +56,70 @@
         <div class="how-card bg-white rounded-3xl p-10 shadow-xl border border-purple-100 hover:border-purple-300 text-center">
           <div class="text-7xl mb-6">🤖</div>
           <h3 class="text-2xl font-bold mb-3 text-purple-700">2. Swarm Runs</h3>
-          <p class="text-gray-600 mb-6">
+          <p class="text-gray-600 mb-6">Planner, Coder, Sourcer, Marketer, Optimizer, and Support work in parallel using Grok + Claude fallback.</p>
+          <ul class="text-sm space-y-2 text-gray-500">
+            <li>✅ Real-time product sourcing</li>
+            <li>✅ Ad campaigns launched instantly</li>
+            <li>✅ 24/7 customer support</li>
+          </ul>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="how-card bg-white rounded-3xl p-10 shadow-xl border border-emerald-100 hover:border-emerald-300 text-center">
+          <div class="text-7xl mb-6">💰</div>
+          <h3 class="text-2xl font-bold mb-3 text-emerald-700">3. You Win</h3>
+          <p class="text-gray-600 mb-6">Store goes live. Weekly reports arrive. Revenue rolls in while you do almost nothing.</p>
+          <ul class="text-sm space-y-2 text-gray-500">
+            <li>✅ Weekly AI reports</li>
+            <li>✅ Profit share collected automatically</li>
+            <li>✅ Zero daily work</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRACTION -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-8">Early Traction</h2>
+      <div class="grid grid-cols-3 gap-8">
+        <div><div class="text-5xl font-bold">$3,400</div><p class="opacity-70">Projected first-week revenue</p></div>
+        <div><div class="text-5xl font-bold">5.4x</div><p class="opacity-70">Average ROAS</p></div>
+        <div><div class="text-5xl font-bold">78%</div><p class="opacity-70">Stores live in beta</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BETA CTA -->
+  <section id="beta" class="bg-indigo-700 text-white py-20 text-center">
+    <div class="max-w-3xl mx-auto px-6">
+      <h2 class="text-4xl font-bold mb-6">Limited Beta — First 50 Users Only</h2>
+      <p class="text-2xl mb-8">$24.50/mo + only 10% revenue share for the first 3 months</p>
+      <a href="mailto:hello@evercart.ai" class="inline-block bg-white text-indigo-700 px-12 py-5 rounded-2xl text-xl font-semibold">Claim Your Beta Store Now</a>
+    </div>
+  </section>
+
+  <footer class="bg-gray-900 text-white py-12 text-center text-sm">
+    © 2026 EverCart AI LLC • evercart.ai
+  </footer>
+
+  <script>
+    function runSwarm() {
+      const output = document.getElementById('swarmOutput');
+      output.classList.remove('hidden');
+      output.innerHTML = `
+        <div class="space-y-6 text-white">
+          <div class="flex items-center gap-4 bg-gray-800 p-5 rounded-2xl"><span class="text-green-400 font-bold">Planner</span><span class="flex-1">Setting goals...</span></div>
+          <div class="flex items-center gap-4 bg-gray-800 p-5 rounded-2xl"><span class="text-blue-400 font-bold">Sourcer</span><span class="flex-1">Finding products...</span></div>
+          <div class="flex items-center gap-4 bg-gray-800 p-5 rounded-2xl"><span class="text-purple-400 font-bold">Coder</span><span class="flex-1">Building store...</span></div>
+          <div class="flex items-center gap-4 bg-gray-800 p-5 rounded-2xl"><span class="text-orange-400 font-bold">Marketer</span><span class="flex-1">Launching ads...</span></div>
+          <div class="flex items-center gap-4 bg-gray-800 p-5 rounded-2xl"><span class="text-pink-400 font-bold">Optimizer</span><span class="flex-1">Optimizing...</span></div>
+          <div class="flex items-center gap-4 bg-gray-800 p-5 rounded-2xl"><span class="text-cyan-400 font-bold">Support</span><span class="flex-1">Ready 24/7...</span></div>
+        </div>
+        <div class="mt-8 text-center text-green-400 font-bold text-xl">Store 78% live • First-week projection: $2,800</div>
+      `;
+    }
+  </script>
+</body>
+</html>

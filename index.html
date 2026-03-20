@@ -12,6 +12,7 @@
     .how-card:hover { transform: translateY(-12px) scale(1.05); box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4); }
     .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1.5rem; box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    .agent-step { transition: all 0.6s ease; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -32,12 +33,29 @@
       <div class="video-container">
         <iframe src="https://www.youtube.com/embed/28EO5JHSk6I?autoplay=1&mute=1&loop=1&playlist=28EO5JHSk6I" title="EverCart AI Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
-      <p class="text-sm text-gray-500 mt-4">25-second real demo of the full agent swarm in action</p>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE SIMULATION -->
+  <section class="py-20 bg-gray-100">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-6">Run Your Own Simulation</h2>
+      <p class="text-gray-600 mb-8">Type any store idea and watch the full swarm in action</p>
+      <input id="demoInput" type="text" placeholder="clean beauty skincare tools" class="w-full max-w-xl mx-auto bg-white p-4 rounded-2xl text-lg border mb-6">
+      <button onclick="runRealisticSwarm()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-12 py-4 rounded-2xl text-xl font-semibold">Run the Swarm</button>
+      
+      <div id="simulationOutput" class="hidden mt-10 text-left bg-white rounded-3xl p-8 shadow-xl max-w-2xl mx-auto">
+        <div class="space-y-6" id="steps"></div>
+        <div id="finalResult" class="hidden mt-8 bg-green-50 border border-green-200 p-6 rounded-2xl text-center">
+          <div class="text-2xl font-bold text-green-700">Store is 78% live!</div>
+          <div class="text-xl text-green-600 mt-2" id="revenue">First-week projection: $2,800</div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- SPICED UP HOW EVERCART WORKS -->
-  <section id="how" class="py-20 bg-gray-100">
+  <section id="how" class="py-20 bg-white">
     <div class="max-w-6xl mx-auto px-6">
       <h2 class="text-4xl font-bold text-center mb-12">How EverCart AI Works</h2>
       <div class="grid md:grid-cols-3 gap-8">
@@ -45,40 +63,23 @@
           <div class="text-7xl mb-6">✍️</div>
           <h3 class="text-2xl font-bold mb-3 text-indigo-700">1. One Prompt</h3>
           <p class="text-gray-600 mb-6">You type a single idea. The Orchestrator instantly breaks it down and assigns tasks to the swarm.</p>
-          <ul class="text-sm space-y-2 text-gray-500">
-            <li>✅ Clean beauty tools</li>
-            <li>✅ Cybersecurity tools</li>
-            <li>✅ Autonomous marketplace stalker</li>
-          </ul>
         </div>
-
         <div class="how-card bg-white rounded-3xl p-10 shadow-xl border border-purple-100 hover:border-purple-300 text-center">
           <div class="text-7xl mb-6">🤖</div>
           <h3 class="text-2xl font-bold mb-3 text-purple-700">2. Swarm Runs</h3>
           <p class="text-gray-600 mb-6">Planner, Coder, Sourcer, Marketer, Optimizer, and Support work in parallel using Grok + Claude fallback.</p>
-          <ul class="text-sm space-y-2 text-gray-500">
-            <li>✅ Real-time product sourcing</li>
-            <li>✅ Ad campaigns launched instantly</li>
-            <li>✅ 24/7 customer support</li>
-          </ul>
         </div>
-
         <div class="how-card bg-white rounded-3xl p-10 shadow-xl border border-emerald-100 hover:border-emerald-300 text-center">
           <div class="text-7xl mb-6">💰</div>
           <h3 class="text-2xl font-bold mb-3 text-emerald-700">3. You Win</h3>
           <p class="text-gray-600 mb-6">Store goes live. Weekly reports arrive. Revenue rolls in while you do almost nothing.</p>
-          <ul class="text-sm space-y-2 text-gray-500">
-            <li>✅ Weekly AI reports</li>
-            <li>✅ Profit share collected automatically</li>
-            <li>✅ Zero daily work</li>
-          </ul>
         </div>
       </div>
     </div>
   </section>
 
   <!-- TRACTION -->
-  <section class="py-16 bg-white">
+  <section class="py-16 bg-gray-900 text-white">
     <div class="max-w-4xl mx-auto px-6 text-center">
       <h2 class="text-4xl font-bold mb-8">Early Traction</h2>
       <div class="grid grid-cols-3 gap-8">
@@ -101,5 +102,41 @@
   <footer class="bg-gray-900 text-white py-12 text-center text-sm">
     © 2026 EverCart AI LLC • evercart.ai
   </footer>
+
+  <script>
+    function runRealisticSwarm() {
+      const input = document.getElementById('demoInput').value || "clean beauty skincare tools";
+      const output = document.getElementById('simulationOutput');
+      const stepsContainer = document.getElementById('steps');
+      output.classList.remove('hidden');
+      stepsContainer.innerHTML = '';
+
+      const steps = [
+        { name: "Planner", text: "Setting aggressive 7-day goals for " + input },
+        { name: "Sourcer", text: "Finding 5 winning products with 380%+ margins" },
+        { name: "Coder", text: "Building full Shopify store in real time" },
+        { name: "Marketer", text: "Launching Meta + Google ads (5.4x ROAS projected)" },
+        { name: "Optimizer", text: "Running A/B tests and inventory alerts" },
+        { name: "Support", text: "Customer replies ready 24/7" }
+      ];
+
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < steps.length) {
+          const stepHTML = `
+            <div class="agent-step flex items-center gap-4 bg-gray-100 p-5 rounded-2xl">
+              <span class="font-bold text-indigo-600">${steps[i].name}</span>
+              <span class="flex-1 text-sm">${steps[i].text}</span>
+              <span class="text-green-500">✓</span>
+            </div>`;
+          stepsContainer.innerHTML += stepHTML;
+          i++;
+        } else {
+          clearInterval(interval);
+          document.getElementById('finalResult').classList.remove('hidden');
+        }
+      }, 700);
+    }
+  </script>
 </body>
 </html>

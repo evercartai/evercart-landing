@@ -10,6 +10,8 @@
     .hero-bg { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); }
     .how-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
     .how-card:hover { transform: translateY(-12px) scale(1.05); box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4); }
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1.5rem; box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); }
+    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -23,24 +25,22 @@
     </div>
   </header>
 
-  <!-- INTERACTIVE SWARM DEMO -->
+  <!-- VIDEO DEMO -->
   <section id="demo" class="py-20 bg-white">
     <div class="max-w-4xl mx-auto px-6 text-center">
       <h2 class="text-4xl font-bold mb-6">Watch the Swarm Run Live</h2>
-      <div class="bg-gray-900 text-white rounded-3xl p-8 max-w-2xl mx-auto">
-        <input id="demoInput" type="text" placeholder="clean beauty skincare tools" class="w-full bg-gray-800 text-white p-4 rounded-2xl mb-6 text-lg">
-        <button onclick="runSwarm()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-12 py-4 rounded-2xl text-xl font-semibold">Run the Swarm</button>
-        <div id="swarmOutput" class="hidden mt-10 text-left"></div>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/28EO5JHSk6I?autoplay=1&mute=1&loop=1&playlist=28EO5JHSk6I" title="EverCart AI Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
+      <p class="text-sm text-gray-500 mt-4">25-second real demo of the full agent swarm in action</p>
     </div>
   </section>
 
-  <!-- FULL 3-CARD HOW EVERCART WORKS -->
+  <!-- SPICED UP HOW EVERCART WORKS -->
   <section id="how" class="py-20 bg-gray-100">
     <div class="max-w-6xl mx-auto px-6">
       <h2 class="text-4xl font-bold text-center mb-12">How EverCart AI Works</h2>
       <div class="grid md:grid-cols-3 gap-8">
-        <!-- Card 1 -->
         <div class="how-card bg-white rounded-3xl p-10 shadow-xl border border-indigo-100 hover:border-indigo-300 text-center">
           <div class="text-7xl mb-6">✍️</div>
           <h3 class="text-2xl font-bold mb-3 text-indigo-700">1. One Prompt</h3>
@@ -52,7 +52,6 @@
           </ul>
         </div>
 
-        <!-- Card 2 -->
         <div class="how-card bg-white rounded-3xl p-10 shadow-xl border border-purple-100 hover:border-purple-300 text-center">
           <div class="text-7xl mb-6">🤖</div>
           <h3 class="text-2xl font-bold mb-3 text-purple-700">2. Swarm Runs</h3>
@@ -64,7 +63,6 @@
           </ul>
         </div>
 
-        <!-- Card 3 -->
         <div class="how-card bg-white rounded-3xl p-10 shadow-xl border border-emerald-100 hover:border-emerald-300 text-center">
           <div class="text-7xl mb-6">💰</div>
           <h3 class="text-2xl font-bold mb-3 text-emerald-700">3. You Win</h3>
@@ -103,23 +101,5 @@
   <footer class="bg-gray-900 text-white py-12 text-center text-sm">
     © 2026 EverCart AI LLC • evercart.ai
   </footer>
-
-  <script>
-    function runSwarm() {
-      const output = document.getElementById('swarmOutput');
-      output.classList.remove('hidden');
-      output.innerHTML = `
-        <div class="space-y-6 text-white">
-          <div class="flex items-center gap-4 bg-gray-800 p-5 rounded-2xl"><span class="text-green-400 font-bold">Planner</span><span class="flex-1">Setting goals...</span></div>
-          <div class="flex items-center gap-4 bg-gray-800 p-5 rounded-2xl"><span class="text-blue-400 font-bold">Sourcer</span><span class="flex-1">Finding products...</span></div>
-          <div class="flex items-center gap-4 bg-gray-800 p-5 rounded-2xl"><span class="text-purple-400 font-bold">Coder</span><span class="flex-1">Building store...</span></div>
-          <div class="flex items-center gap-4 bg-gray-800 p-5 rounded-2xl"><span class="text-orange-400 font-bold">Marketer</span><span class="flex-1">Launching ads...</span></div>
-          <div class="flex items-center gap-4 bg-gray-800 p-5 rounded-2xl"><span class="text-pink-400 font-bold">Optimizer</span><span class="flex-1">Optimizing...</span></div>
-          <div class="flex items-center gap-4 bg-gray-800 p-5 rounded-2xl"><span class="text-cyan-400 font-bold">Support</span><span class="flex-1">Ready 24/7...</span></div>
-        </div>
-        <div class="mt-8 text-center text-green-400 font-bold text-xl">Store 78% live • First-week projection: $2,800</div>
-      `;
-    }
-  </script>
 </body>
 </html>

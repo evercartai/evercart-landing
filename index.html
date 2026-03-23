@@ -23,7 +23,7 @@
             <div class="flex gap-10 text-sm font-medium">
                 <a href="#demo" class="hover:text-amber-400 transition">Demo</a>
                 <a href="#how" class="hover:text-amber-400 transition">How It Works</a>
-                <a href="https://velvet-skin-24.myshopify.com" target="_blank" class="hover:text-amber-400 transition">Live Store</a>
+                <a href="https://velvet-skin-24.myshopify.com" target="_blank" class="hover:text-amber-400 transition">View Store</a>
             </div>
             <a href="#beta" class="bg-white text-black px-8 py-3 rounded-2xl font-semibold hover:bg-amber-400 transition">Join Beta</a>
         </div>
@@ -56,7 +56,7 @@
                 <p class="text-zinc-400 text-xl">Type any idea. See the swarm work.</p>
             </div>
             <div class="bg-zinc-900 border border-amber-400/30 rounded-3xl p-10">
-                <input id="demoInput" type="text" placeholder="Velvet Skin - premium clean beauty skincare" class="w-full bg-black border border-white/20 rounded-2xl px-8 py-6 text-xl focus:outline-none focus:border-amber-400">
+                <input id="demoInput" type="text" placeholder="Velvet Skin - premium skincare products" class="w-full bg-black border border-white/20 rounded-2xl px-8 py-6 text-xl focus:outline-none focus:border-amber-400">
                 <button onclick="runSwarm()" class="mt-8 w-full bg-gradient-to-r from-amber-400 to-rose-400 text-black py-6 rounded-2xl font-semibold text-xl hover:brightness-110 transition">Run the Agent Swarm</button>
                 <div id="swarmOutput" class="mt-12 hidden"></div>
             </div>
@@ -99,7 +99,7 @@
 
     <script>
         function runSwarm() {
-            const input = document.getElementById('demoInput').value || "Velvet Skin";
+            const input = document.getElementById('demoInput').value || "Velvet Skin - premium skincare products";
             const output = document.getElementById('swarmOutput');
             output.classList.remove('hidden');
             output.innerHTML = `

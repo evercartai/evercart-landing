@@ -7,73 +7,91 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: system-ui, sans-serif; }
-        .hero-bg { background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); }
-        .agent-step { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hero-bg { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%); }
+        .gold-accent { color: #d4af77; }
     </style>
 </head>
 <body class="bg-zinc-950 text-white">
 
     <!-- NAV -->
-    <nav class="bg-black/80 backdrop-blur-md fixed w-full z-50">
+    <nav class="bg-black/90 backdrop-blur-md fixed w-full z-50 border-b border-white/10">
         <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-violet-600 rounded-xl flex items-center justify-center text-white font-bold">EC</div>
-                <span class="text-2xl font-semibold tracking-tight">EverCart AI</span>
+                <div class="w-9 h-9 bg-gradient-to-br from-amber-400 to-rose-400 rounded-2xl flex items-center justify-center text-black font-bold text-xl">EC</div>
+                <span class="text-3xl font-semibold tracking-tighter">EverCart AI</span>
             </div>
-            <div class="flex gap-8 text-sm">
-                <a href="#demo" class="hover:text-violet-400 transition">Try Demo</a>
-                <a href="#how" class="hover:text-violet-400 transition">How It Works</a>
-                <a href="https://velvet-skin-24.myshopify.com" target="_blank" class="hover:text-violet-400 transition">View Store</a>
+            <div class="flex gap-10 text-sm font-medium">
+                <a href="#demo" class="hover:text-amber-400 transition">Demo</a>
+                <a href="#how" class="hover:text-amber-400 transition">How It Works</a>
+                <a href="https://velvet-skin-24.myshopify.com" target="_blank" class="hover:text-amber-400 transition">Live Store</a>
             </div>
-            <a href="#beta" class="bg-white text-black px-6 py-2.5 rounded-2xl font-medium hover:bg-white/90 transition">Join Beta</a>
+            <a href="#beta" class="bg-white text-black px-8 py-3 rounded-2xl font-semibold hover:bg-amber-400 transition">Join Beta</a>
         </div>
     </nav>
 
     <!-- HERO -->
-    <section class="hero-bg pt-32 pb-20">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <h1 class="text-6xl font-bold tracking-tight leading-none mb-6">
-                Launch and run a profitable Shopify store with AI agents.<br>
-                Zero employees. Real revenue from day one.
+    <section class="hero-bg pt-32 pb-24">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <h1 class="text-6xl md:text-7xl font-bold tracking-tighter leading-none mb-8">
+                Launch and run a profitable Shopify store<br>with AI agents.
             </h1>
-            <p class="text-2xl text-zinc-400 max-w-2xl mx-auto mb-10">
-                Works for beauty, fashion, home goods, pet supplies — any niche. Just give one prompt and let the agents do the rest.
+            <p class="text-3xl text-zinc-400 max-w-3xl mx-auto mb-10">
+                Zero employees. One prompt. Real revenue from day one.
             </p>
-            <div class="flex gap-4 justify-center">
-                <a href="#demo" class="bg-violet-600 hover:bg-violet-500 px-10 py-4 rounded-3xl text-lg font-medium transition">Try the AI Demo Now</a>
-                <a href="https://velvet-skin-24.myshopify.com" target="_blank" class="border border-white/50 hover:bg-white/10 px-10 py-4 rounded-3xl text-lg font-medium transition">View Live Store</a>
+            <p class="text-xl text-zinc-500 max-w-xl mx-auto mb-12">
+                Works for beauty, fashion, home goods, pet supplies — any niche.
+            </p>
+            <div class="flex gap-5 justify-center">
+                <a href="#demo" class="bg-white text-black px-12 py-5 rounded-3xl font-semibold text-lg hover:bg-amber-400 transition">Try the AI Demo</a>
+                <a href="https://velvet-skin-24.myshopify.com" target="_blank" class="border border-white/60 px-12 py-5 rounded-3xl font-semibold text-lg hover:bg-white/10 transition">View Live Store</a>
             </div>
         </div>
     </section>
 
     <!-- INTERACTIVE DEMO -->
-    <section id="demo" class="py-20 bg-zinc-900">
+    <section id="demo" class="py-24 bg-black">
         <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-10">
-                <h2 class="text-4xl font-semibold mb-3">See the Magic in Real Time</h2>
-                <p class="text-zinc-400">Type any store idea and watch the 6-agent swarm run</p>
+            <div class="text-center mb-12">
+                <h2 class="text-5xl font-semibold mb-4">Watch the agents build your store in real time</h2>
+                <p class="text-zinc-400 text-xl">Type any idea. See the swarm work.</p>
             </div>
-            
-            <div class="bg-zinc-950 border border-white/10 rounded-3xl p-8">
-                <input id="demoInput" type="text" placeholder="Velvet Skin - premium clean beauty skincare" 
-                       class="w-full bg-black border border-white/20 rounded-2xl px-6 py-5 text-lg focus:outline-none focus:border-violet-500">
-                
-                <button onclick="runSwarm()" 
-                        class="mt-6 w-full bg-white text-black py-5 rounded-2xl font-semibold text-lg hover:bg-white/90 transition">
-                    Run Agent Swarm
-                </button>
-
-                <div id="swarmOutput" class="swarm-output mt-8 hidden"></div>
+            <div class="bg-zinc-900 border border-amber-400/30 rounded-3xl p-10">
+                <input id="demoInput" type="text" placeholder="Velvet Skin - premium clean beauty skincare" class="w-full bg-black border border-white/20 rounded-2xl px-8 py-6 text-xl focus:outline-none focus:border-amber-400">
+                <button onclick="runSwarm()" class="mt-8 w-full bg-gradient-to-r from-amber-400 to-rose-400 text-black py-6 rounded-2xl font-semibold text-xl hover:brightness-110 transition">Run the Agent Swarm</button>
+                <div id="swarmOutput" class="mt-12 hidden"></div>
             </div>
         </div>
     </section>
 
-    <!-- LIVE STORE LINK -->
-    <section id="shop" class="py-20 bg-black text-center">
+    <!-- HOW IT WORKS -->
+    <section id="how" class="py-24 bg-zinc-950">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-5xl font-semibold text-center mb-16">How EverCart AI Works</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-zinc-900 border border-amber-400/20 rounded-3xl p-10 hover:border-amber-400 transition">
+                    <div class="text-7xl mb-6">✍️</div>
+                    <h3 class="text-3xl font-semibold mb-4">1. One Prompt</h3>
+                    <p class="text-zinc-400">You describe your store idea. The Orchestrator creates a 7-day plan.</p>
+                </div>
+                <div class="bg-zinc-900 border border-amber-400/20 rounded-3xl p-10 hover:border-amber-400 transition">
+                    <div class="text-7xl mb-6">🤖</div>
+                    <h3 class="text-3xl font-semibold mb-4">2. 6 Agents Run 24/7</h3>
+                    <p class="text-zinc-400">Planner, Coder, Sourcer, Marketer, Optimizer, and Support work together to build and grow your store.</p>
+                </div>
+                <div class="bg-zinc-900 border border-amber-400/20 rounded-3xl p-10 hover:border-amber-400 transition">
+                    <div class="text-7xl mb-6">💰</div>
+                    <h3 class="text-3xl font-semibold mb-4">3. Revenue Starts Flowing</h3>
+                    <p class="text-zinc-400">Your store goes live on Shopify. Ads run, orders come in, agents optimize automatically.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE STORE -->
+    <section class="py-24 bg-black text-center">
         <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-4xl font-semibold mb-4">Your Store is Already Live</h2>
-            <a href="https://velvet-skin-24.myshopify.com" target="_blank" 
-               class="inline-block bg-white text-black px-12 py-6 rounded-3xl text-2xl font-medium hover:bg-white/90 transition">
+            <h2 class="text-5xl font-semibold mb-6">Your Store is Already Live</h2>
+            <a href="https://velvet-skin-24.myshopify.com" target="_blank" class="inline-block bg-gradient-to-r from-amber-400 to-rose-400 text-black px-16 py-8 rounded-3xl text-3xl font-semibold hover:brightness-110 transition">
                 Visit Velvet Skin Store →
             </a>
         </div>
@@ -85,16 +103,16 @@
             const output = document.getElementById('swarmOutput');
             output.classList.remove('hidden');
             output.innerHTML = `
-                <div class="space-y-6 text-sm">
-                    <div class="flex items-center gap-3"><div class="w-6 h-6 bg-violet-600 rounded-full flex items-center justify-center text-xs">1</div><span class="font-medium">Planner</span><span class="ml-auto text-emerald-400">Creating 7-day plan...</span></div>
-                    <div class="flex items-center gap-3"><div class="w-6 h-6 bg-violet-600 rounded-full flex items-center justify-center text-xs">2</div><span class="font-medium">Sourcer</span><span class="ml-auto text-emerald-400">Found products @ 340% margin</span></div>
-                    <div class="flex items-center gap-3"><div class="w-6 h-6 bg-violet-600 rounded-full flex items-center justify-center text-xs">3</div><span class="font-medium">Coder</span><span class="ml-auto text-emerald-400">Built Shopify store + Printful products</span></div>
-                    <div class="flex items-center gap-3"><div class="w-6 h-6 bg-violet-600 rounded-full flex items-center justify-center text-xs">4</div><span class="font-medium">Marketer</span><span class="ml-auto text-emerald-400">Launched ads</span></div>
-                    <div class="flex items-center gap-3"><div class="w-6 h-6 bg-violet-600 rounded-full flex items-center justify-center text-xs">5</div><span class="font-medium">Optimizer</span><span class="ml-auto text-emerald-400">ROAS at 4.8x</span></div>
-                    <div class="flex items-center gap-3"><div class="w-6 h-6 bg-violet-600 rounded-full flex items-center justify-center text-xs">6</div><span class="font-medium">Support</span><span class="ml-auto text-emerald-400">Customer replies sent</span></div>
-                    <div class="pt-6 border-t border-white/10 text-center">
-                        <div class="text-emerald-400 text-xl font-semibold">Store live • First-week projection: $3,240</div>
-                        <a href="https://velvet-skin-24.myshopify.com" target="_blank" class="mt-4 inline-block text-violet-400 underline">View your real store now →</a>
+                <div class="space-y-8 text-sm">
+                    <div class="flex items-center gap-4"><div class="w-7 h-7 bg-amber-400 rounded-full flex items-center justify-center text-xs text-black font-bold">1</div><span class="font-medium">Planner</span><span class="ml-auto text-emerald-400">Creating 7-day plan...</span></div>
+                    <div class="flex items-center gap-4"><div class="w-7 h-7 bg-amber-400 rounded-full flex items-center justify-center text-xs text-black font-bold">2</div><span class="font-medium">Sourcer</span><span class="ml-auto text-emerald-400">Found products @ 340% margin</span></div>
+                    <div class="flex items-center gap-4"><div class="w-7 h-7 bg-amber-400 rounded-full flex items-center justify-center text-xs text-black font-bold">3</div><span class="font-medium">Coder</span><span class="ml-auto text-emerald-400">Built Shopify store + Printful products</span></div>
+                    <div class="flex items-center gap-4"><div class="w-7 h-7 bg-amber-400 rounded-full flex items-center justify-center text-xs text-black font-bold">4</div><span class="font-medium">Marketer</span><span class="ml-auto text-emerald-400">Launched ads</span></div>
+                    <div class="flex items-center gap-4"><div class="w-7 h-7 bg-amber-400 rounded-full flex items-center justify-center text-xs text-black font-bold">5</div><span class="font-medium">Optimizer</span><span class="ml-auto text-emerald-400">ROAS at 4.8x</span></div>
+                    <div class="flex items-center gap-4"><div class="w-7 h-7 bg-amber-400 rounded-full flex items-center justify-center text-xs text-black font-bold">6</div><span class="font-medium">Support</span><span class="ml-auto text-emerald-400">Customer replies sent</span></div>
+                    <div class="pt-8 text-center">
+                        <div class="text-emerald-400 text-2xl font-semibold">Store live • First-week projection: $3,240</div>
+                        <a href="https://velvet-skin-24.myshopify.com" target="_blank" class="mt-6 inline-block text-amber-400 underline text-lg">View your real store now →</a>
                     </div>
                 </div>
             `;

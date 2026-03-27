@@ -1,455 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EverCart AI — One Prompt. A Store That Runs Itself.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --gold: #d4af77;
-            --gold-light: #f0d49a;
-            --gold-dim: #a07d45;
-        }
-        * { box-sizing: border-box; }
-        body { font-family: 'DM Sans', sans-serif; background: #080808; }
-        .serif { font-family: 'Instrument Serif', serif; }
-
-        body::before {
-            content: '';
-            position: fixed; inset: 0; z-index: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-            opacity: 0.025;
-            pointer-events: none;
-        }
-
-        .grid-bg {
-            background-image:
-                linear-gradient(rgba(212,175,119,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(212,175,119,0.04) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            pointer-events: none;
-        }
-
-        .gold-text {
-            background: linear-gradient(135deg, #f0d49a 0%, #d4af77 40%, #a07d45 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-blur {
-            background: rgba(8,8,8,0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-up { animation: fadeUp 0.8s ease forwards; opacity: 0; }
-        .delay-1 { animation-delay: 0.15s; }
-        .delay-2 { animation-delay: 0.3s; }
-        .delay-3 { animation-delay: 0.45s; }
-        .delay-4 { animation-delay: 0.6s; }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-16px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        .agent-row { opacity: 0; }
-        .agent-row.active { animation: slideIn 0.4s ease forwards; }
-
-        @keyframes ping {
-            75%, 100% { transform: scale(2); opacity: 0; }
-        }
-        .ping { animation: ping 1.5s cubic-bezier(0,0,0.2,1) infinite; }
-
-        .tcard { transition: transform 0.3s ease, border-color 0.3s ease; }
-        .tcard:hover { transform: translateY(-4px); border-color: rgba(212,175,119,0.4) !important; }
-
-        .btn-glow {
-            box-shadow: 0 0 40px rgba(212,175,119,0.25);
-            transition: box-shadow 0.3s ease, transform 0.2s ease;
-        }
-        .btn-glow:hover {
-            box-shadow: 0 0 60px rgba(212,175,119,0.45);
-            transform: translateY(-2px);
-        }
-
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #080808; }
-        ::-webkit-scrollbar-thumb { background: #a07d45; border-radius: 4px; }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero-title { font-size: 3rem; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EverCart AI - AI Shopify Store Builder That Runs Itself</title>
+  <meta name="description" content="EverCart AI builds and runs autonomous Shopify stores from a single prompt. Six AI agents handle sourcing, building, marketing, and support. Real revenue. Zero overhead.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com" defer></script>
+  <style>
+    :root { --gold: #d4af77; --gold-light: #f0d49a; --gold-dim: #a07d45; }
+    * { box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: #080808; }
+    .serif { font-family: 'Instrument Serif', serif; }
+    body::before { content: ''; position: fixed; inset: 0; z-index: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.025; pointer-events: none; }
+    .grid-bg { background-image: linear-gradient(rgba(212,175,119,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,119,0.04) 1px, transparent 1px); background-size: 60px 60px; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; }
+    .gold-text { background: linear-gradient(135deg, #f0d49a 0%, #d4af77 40%, #a07d45 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav-blur { background: rgba(8,8,8,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.8s ease forwards; opacity: 0; }
+    .delay-1 { animation-delay: 0.15s; } .delay-2 { animation-delay: 0.3s; } .delay-3 { animation-delay: 0.45s; } .delay-4 { animation-delay: 0.6s; }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: translateX(0); } }
+    .agent-row { opacity: 0; } .agent-row.active { animation: slideIn 0.4s ease forwards; }
+    @keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+    .ping { animation: ping 1.5s cubic-bezier(0,0,0.2,1) infinite; }
+    .tcard { transition: transform 0.3s ease, border-color 0.3s ease; }
+    .tcard:hover { transform: translateY(-4px); border-color: rgba(212,175,119,0.4) !important; }
+    .btn-glow { box-shadow: 0 0 40px rgba(212,175,119,0.25); transition: box-shadow 0.3s ease, transform 0.2s ease; }
+    .btn-glow:hover { box-shadow: 0 0 60px rgba(212,175,119,0.45); transform: translateY(-2px); }
+    ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: #080808; } ::-webkit-scrollbar-thumb { background: #a07d45; border-radius: 4px; }
+    .hero-trust-mobile { display: none; }
+    @media (max-width: 768px) { .nav-links { display: none; } .hero-title { font-size: 3rem !important; } .hero-trust-desktop { display: none; } .hero-trust-mobile { display: block; } }
+    nav a, button { min-height: 44px; display: inline-flex; align-items: center; }
+    .skip-link { position: absolute; top: -100px; left: 16px; background: #d4af77; color: #000; padding: 8px 16px; border-radius: 4px; font-weight: 600; z-index: 9999; transition: top 0.2s; }
+    .skip-link:focus { top: 8px; }
+    details summary { list-style: none; } details summary::-webkit-details-marker { display: none; }
+  </style>
 </head>
 <body class="text-white overflow-x-hidden">
-
-    <!-- NAV -->
-    <nav class="nav-blur fixed w-full z-50 border-b border-white/[0.06]">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl flex items-center justify-center text-black font-bold text-sm" style="background: linear-gradient(135deg, #d4af77, #f0a070);">EC</div>
-                <span class="text-xl font-semibold tracking-tight">EverCart <span class="gold-text">AI</span></span>
-            </div>
-            <div class="nav-links flex gap-8 text-sm font-medium text-zinc-400">
-                <a href="#demo" class="hover:text-white transition-colors duration-200">Demo</a>
-                <a href="#how" class="hover:text-white transition-colors duration-200">How It Works</a>
-                <a href="#proof" class="hover:text-white transition-colors duration-200">Results</a>
-                <a href="https://velvet-skin-24.myshopify.com" target="_blank" class="hover:text-white transition-colors duration-200">Live Store ↗</a>
-            </div>
-            <a href="#beta" class="text-sm font-medium px-5 py-2.5 rounded-xl border border-amber-400/40 text-amber-400 hover:bg-amber-400 hover:text-black transition-all duration-200">
-                Join Beta
-            </a>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <nav class="nav-blur fixed w-full z-50 border-b border-white/[0.06]" role="navigation" aria-label="Main navigation">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center text-black font-bold text-sm" style="background: linear-gradient(135deg, #d4af77, #f0a070);" aria-hidden="true">EC</div>
+        <span class="text-xl font-semibold tracking-tight">EverCart <span class="gold-text">AI</span></span>
+      </div>
+      <div class="nav-links flex gap-8 text-sm font-medium text-zinc-400">
+        <a href="#how" class="hover:text-white transition-colors duration-200">How It Works</a>
+        <a href="#proof" class="hover:text-white transition-colors duration-200">Results</a>
+        <a href="#demo" class="hover:text-white transition-colors duration-200">Demo</a>
+        <a href="#faq" class="hover:text-white transition-colors duration-200">FAQ</a>
+        <a href="https://velvet-skin-24.myshopify.com" target="_blank" rel="noopener" class="hover:text-white transition-colors duration-200">Live Store</a>
+      </div>
+      <a href="#beta" class="text-sm font-medium px-5 py-2.5 rounded-xl border border-amber-400/40 text-amber-400 hover:bg-amber-400 hover:text-black transition-all duration-200">Join Beta</a>
+    </div>
+  </nav>
+  <main id="main">
+  <section class="relative grid-bg min-h-screen flex items-center pt-20 pb-28 overflow-hidden" aria-label="Hero">
+    <div class="orb w-96 h-96 top-20 left-1/4" style="background:rgba(212,175,119,0.12)" aria-hidden="true"></div>
+    <div class="orb w-64 h-64 bottom-20 right-1/4" style="background:rgba(240,160,112,0.08)" aria-hidden="true"></div>
+    <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+      <div class="fade-up inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] text-sm text-zinc-400">
+        <span class="relative flex h-2 w-2" aria-hidden="true"><span class="ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span></span>
+        47 stores launched this week &nbsp;·&nbsp; Beta open — 18 of 50 spots left
+      </div>
+      <h1 class="fade-up delay-1 serif hero-title text-7xl md:text-8xl leading-[0.95] tracking-tight mb-8">One prompt.<br><em class="gold-text">A store that<br>runs itself.</em></h1>
+      <p class="fade-up delay-2 text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-4 leading-relaxed">Yes, it actually builds the store, sources the products, launches the ads, and handles support. You watch. The agents work.</p>
+      <p class="hero-trust-mobile fade-up delay-2 text-xs text-zinc-500 mb-6">Powered by Shopify, Claude, and Grok &nbsp;·&nbsp; $128K verified beta GMV</p>
+      <div class="fade-up delay-3 flex flex-wrap gap-4 justify-center mb-6">
+        <a href="#beta" class="btn-glow bg-gradient-to-r from-amber-400 to-amber-500 text-black px-8 py-4 rounded-2xl font-semibold text-base hover:brightness-110 transition-all duration-200">Claim Founding Member Access - $67</a>
+        <a href="https://velvet-skin-24.myshopify.com" target="_blank" rel="noopener" class="px-8 py-4 rounded-2xl font-medium text-base border border-white/15 text-zinc-300 hover:bg-white/[0.06] transition-all duration-200">See Live Store</a>
+      </div>
+      <p class="fade-up delay-4 text-xs text-zinc-600">First 50 founding members only &nbsp;·&nbsp; Price increases after</p>
+      <div class="fade-up delay-4 hero-trust-desktop mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-zinc-500">
+        <span>Powered by Shopify</span><span class="text-zinc-700" aria-hidden="true">|</span>
+        <span>Powered by Claude + Grok</span><span class="text-zinc-700" aria-hidden="true">|</span>
+        <span>$128K verified GMV in beta</span><span class="text-zinc-700" aria-hidden="true">|</span>
+        <span>Avg. first sale in 4.8 days</span>
+      </div>
+    </div>
+  </section>
+  <section id="how" class="py-28 bg-[#060606]" aria-label="How it works">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-20">
+        <p class="text-amber-400 text-sm font-medium tracking-widest uppercase mb-3">The Agent Swarm</p>
+        <h2 class="serif text-5xl md:text-6xl">Six agents. One goal.</h2>
+        <p class="text-zinc-400 mt-4 text-lg max-w-xl mx-auto">While you sleep, your agent swarm is sourcing, selling, and scaling.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="relative p-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-amber-400/20 transition-colors duration-300"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-semibold text-sm flex-shrink-0" aria-hidden="true">01</div><div><h3 class="font-semibold text-white mb-1">Planner Agent <span class="text-xs text-zinc-600 font-normal ml-1">Claude Sonnet</span></h3><p class="text-zinc-400 text-sm leading-relaxed">Builds your 7-day go-to-market strategy, sets revenue targets, maps competitors, and defines your ideal customer before a single product is sourced.</p></div></div></div>
+        <div class="relative p-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-amber-400/20 transition-colors duration-300"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-semibold text-sm flex-shrink-0" aria-hidden="true">02</div><div><h3 class="font-semibold text-white mb-1">Sourcer Agent <span class="text-xs text-zinc-600 font-normal ml-1">Grok 2 + live web search</span></h3><p class="text-zinc-400 text-sm leading-relaxed">Finds 5-8 winning products with 300%+ margins using real-time web and X search. Verifies every supplier URL. No fabricated listings.</p></div></div></div>
+        <div class="relative p-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-amber-400/20 transition-colors duration-300"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-semibold text-sm flex-shrink-0" aria-hidden="true">03</div><div><h3 class="font-semibold text-white mb-1">Coder Agent <span class="text-xs text-zinc-600 font-normal ml-1">Claude Sonnet</span></h3><p class="text-zinc-400 text-sm leading-relaxed">Builds your complete Shopify store via GraphQL — products, collections, theme, and Printful fulfillment — from clean production code.</p></div></div></div>
+        <div class="relative p-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-amber-400/20 transition-colors duration-300"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-semibold text-sm flex-shrink-0" aria-hidden="true">04</div><div><h3 class="font-semibold text-white mb-1">Marketer Agent <span class="text-xs text-zinc-600 font-normal ml-1">Grok 2 + live trend data</span></h3><p class="text-zinc-400 text-sm leading-relaxed">Launches Meta and TikTok campaigns using real-time trend data. Three creative variants per campaign for automatic A/B testing from day one.</p></div></div></div>
+        <div class="relative p-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-amber-400/20 transition-colors duration-300"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-semibold text-sm flex-shrink-0" aria-hidden="true">05</div><div><h3 class="font-semibold text-white mb-1">Optimizer Agent <span class="text-xs text-zinc-600 font-normal ml-1">Claude Sonnet</span></h3><p class="text-zinc-400 text-sm leading-relaxed">Monitors ROAS daily, shifts budget from losing campaigns to winning ones, flags restock needs, and recommends price adjustments continuously.</p></div></div></div>
+        <div class="relative p-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-amber-400/20 transition-colors duration-300"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-semibold text-sm flex-shrink-0" aria-hidden="true">06</div><div><h3 class="font-semibold text-white mb-1">Support Agent <span class="text-xs text-zinc-600 font-normal ml-1">Claude Sonnet</span></h3><p class="text-zinc-400 text-sm leading-relaxed">Handles every customer message 24/7 — order questions, refunds, cart recovery — with tone-consistent responses. Zero human intervention.</p></div></div></div>
+      </div>
+    </div>
+  </section>
+  <section id="demo" class="py-28 bg-[#080808] grid-bg" aria-label="Live demo">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <p class="text-amber-400 text-sm font-medium tracking-widest uppercase mb-3">Live Demo</p>
+        <h2 class="serif text-5xl md:text-6xl mb-4">Watch it happen.</h2>
+        <p class="text-zinc-400 text-lg">Type any store idea. See your agent swarm build it in real time.</p>
+      </div>
+      <div class="relative rounded-3xl overflow-hidden border border-white/[0.08]" style="background: #0d0d0d;">
+        <div class="flex items-center gap-2 px-5 py-3 border-b border-white/[0.06]" aria-hidden="true">
+          <div class="w-3 h-3 rounded-full bg-rose-500/70"></div><div class="w-3 h-3 rounded-full bg-amber-500/70"></div><div class="w-3 h-3 rounded-full bg-emerald-500/70"></div>
+          <span class="ml-3 text-xs text-zinc-600 font-mono">evercart-agent-swarm — running</span>
         </div>
-    </nav>
-
-    <!-- HERO -->
-    <section class="relative grid-bg min-h-screen flex items-center pt-20 pb-28 overflow-hidden">
-        <div class="orb w-96 h-96 top-20 left-1/4" style="background:rgba(212,175,119,0.12)"></div>
-        <div class="orb w-64 h-64 bottom-20 right-1/4" style="background:rgba(240,160,112,0.08)"></div>
-
-        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
-            <div class="fade-up inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] text-sm text-zinc-400">
-                <span class="relative flex h-2 w-2">
-                    <span class="ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-                </span>
-                47 stores launched this week &nbsp;·&nbsp; Beta open — 18 of 50 spots left
+        <div class="p-8">
+          <p class="text-xs text-zinc-600 mb-3 font-medium uppercase tracking-wider">Try an example</p>
+          <div class="flex flex-wrap gap-2 mb-5" role="group" aria-label="Example store ideas">
+            <button type="button" onclick="setPrompt('Luxury skincare for Gen Z women')" class="text-xs px-3 py-1.5 rounded-lg border border-white/10 text-zinc-400 hover:border-amber-400/40 hover:text-amber-400 transition-all duration-200 cursor-pointer bg-transparent">Luxury skincare for Gen Z</button>
+            <button type="button" onclick="setPrompt('Eco-friendly pet accessories')" class="text-xs px-3 py-1.5 rounded-lg border border-white/10 text-zinc-400 hover:border-amber-400/40 hover:text-amber-400 transition-all duration-200 cursor-pointer bg-transparent">Eco pet accessories</button>
+            <button type="button" onclick="setPrompt('Home gym gear for busy parents')" class="text-xs px-3 py-1.5 rounded-lg border border-white/10 text-zinc-400 hover:border-amber-400/40 hover:text-amber-400 transition-all duration-200 cursor-pointer bg-transparent">Home gym gear</button>
+            <button type="button" onclick="setPrompt('Minimalist desk accessories for remote workers')" class="text-xs px-3 py-1.5 rounded-lg border border-white/10 text-zinc-400 hover:border-amber-400/40 hover:text-amber-400 transition-all duration-200 cursor-pointer bg-transparent">Desk accessories</button>
+          </div>
+          <div class="flex gap-3">
+            <label for="demoInput" class="sr-only">Describe your store idea</label>
+            <input id="demoInput" type="text" placeholder="Describe your store idea..." value="Luxury skincare for Gen Z women" class="flex-1 bg-black/60 border border-white/10 rounded-xl px-5 py-3.5 text-sm focus:outline-none focus:border-amber-400/50 text-white placeholder-zinc-600 transition-colors duration-200">
+            <button type="button" onclick="runSwarm()" id="runBtn" class="bg-gradient-to-r from-amber-400 to-amber-500 text-black px-6 py-3.5 rounded-xl font-semibold text-sm hover:brightness-110 transition-all duration-200 whitespace-nowrap">Run Agents</button>
+          </div>
+          <p class="text-xs text-zinc-700 mt-2">No account required. No credit card.</p>
+          <div id="swarmOutput" class="mt-8 hidden" aria-live="polite">
+            <div class="border-t border-white/[0.06] pt-6 space-y-0" id="agentList"></div>
+            <div id="swarmResult" class="hidden mt-6 pt-6 border-t border-white/[0.06]">
+              <div class="flex items-center justify-between flex-wrap gap-4">
+                <div><p class="text-emerald-400 font-semibold text-lg">Store live</p><p class="text-zinc-400 text-sm mt-1">First-week projection: <span class="text-white font-medium">$3,240</span> &nbsp;·&nbsp; Avg ROAS: <span class="text-white font-medium">4.8x</span></p></div>
+                <a href="https://velvet-skin-24.myshopify.com" target="_blank" rel="noopener" class="text-sm px-5 py-2.5 rounded-xl border border-amber-400/40 text-amber-400 hover:bg-amber-400 hover:text-black transition-all duration-200">View live store</a>
+              </div>
             </div>
-
-            <h1 class="fade-up delay-1 serif hero-title text-7xl md:text-8xl leading-[0.95] tracking-tight mb-8">
-                One prompt.<br>
-                <em class="gold-text">A store that<br>runs itself.</em>
-            </h1>
-
-            <p class="fade-up delay-2 text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-                Launch and operate a profitable Shopify store with a swarm of AI agents — handling sourcing, copy, ads, and fulfillment. No employees. Real revenue from day one.
-            </p>
-
-            <div class="fade-up delay-3 flex flex-wrap gap-4 justify-center mb-6">
-                <a href="#demo" class="btn-glow bg-gradient-to-r from-amber-400 to-amber-500 text-black px-8 py-4 rounded-2xl font-semibold text-base hover:brightness-110 transition-all duration-200">
-                    Try the AI Demo — Free
-                </a>
-                <a href="https://velvet-skin-24.myshopify.com" target="_blank" class="px-8 py-4 rounded-2xl font-medium text-base border border-white/15 text-zinc-300 hover:bg-white/[0.06] transition-all duration-200">
-                    See Live Store ↗
-                </a>
-            </div>
-            <p class="fade-up delay-4 text-xs text-zinc-600">No credit card · Free during beta · Then $49/mo per store</p>
-
-            <div class="fade-up delay-4 mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-zinc-500">
-                <span>✓ Built on Shopify</span>
-                <span class="text-zinc-700">|</span>
-                <span>✓ Avg. first sale in 4.8 days</span>
-                <span class="text-zinc-700">|</span>
-                <span>✓ $128K verified GMV in beta</span>
-                <span class="text-zinc-700">|</span>
-                <span>✓ No Shopify experience needed</span>
-            </div>
+          </div>
         </div>
-    </section>
-
-    <!-- HOW IT WORKS -->
-    <section id="how" class="py-28 bg-[#060606]">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-20">
-                <p class="text-amber-400 text-sm font-medium tracking-widest uppercase mb-3">The Agent Swarm</p>
-                <h2 class="serif text-5xl md:text-6xl">Six agents. One goal.</h2>
-                <p class="text-zinc-400 mt-4 text-lg max-w-xl mx-auto">While you sleep, your agent swarm is sourcing, selling, and scaling.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="relative p-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-amber-400/20 transition-colors duration-300">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-semibold text-sm flex-shrink-0">01</div>
-                        <div>
-                            <h3 class="font-semibold text-white mb-1">Planner Agent</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed">Builds your 30-day go-to-market strategy, selects your niche, and sets revenue targets based on market data.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative p-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-amber-400/20 transition-colors duration-300">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-semibold text-sm flex-shrink-0">02</div>
-                        <div>
-                            <h3 class="font-semibold text-white mb-1">Sourcer Agent</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed">Finds winning products with 300%+ margins via Printful, AliExpress, and dropship suppliers. No inventory needed.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative p-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-amber-400/20 transition-colors duration-300">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-semibold text-sm flex-shrink-0">03</div>
-                        <div>
-                            <h3 class="font-semibold text-white mb-1">Builder Agent</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed">Builds your full Shopify store — brand identity, product listings, copy, and checkout — in under 20 minutes.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative p-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-amber-400/20 transition-colors duration-300">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-semibold text-sm flex-shrink-0">04</div>
-                        <div>
-                            <h3 class="font-semibold text-white mb-1">Marketer Agent</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed">Writes ad copy, launches Meta and TikTok campaigns, and targets your ideal customer from day one.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative p-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-amber-400/20 transition-colors duration-300">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-semibold text-sm flex-shrink-0">05</div>
-                        <div>
-                            <h3 class="font-semibold text-white mb-1">Optimizer Agent</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed">Monitors ROAS daily, kills losing ads, scales winners, and A/B tests product pages continuously.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative p-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-amber-400/20 transition-colors duration-300">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-semibold text-sm flex-shrink-0">06</div>
-                        <div>
-                            <h3 class="font-semibold text-white mb-1">Support Agent</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed">Handles all customer emails, refund requests, and order inquiries — 24/7, zero human intervention.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- INTERACTIVE DEMO -->
-    <section id="demo" class="py-28 bg-[#080808] grid-bg">
-        <div class="max-w-3xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <p class="text-amber-400 text-sm font-medium tracking-widest uppercase mb-3">Live Demo</p>
-                <h2 class="serif text-5xl md:text-6xl mb-4">Watch it happen.</h2>
-                <p class="text-zinc-400 text-lg">Type any store idea. See your agent swarm build it in real time.</p>
-            </div>
-
-            <div class="relative rounded-3xl overflow-hidden border border-white/[0.08]" style="background: #0d0d0d;">
-                <div class="flex items-center gap-2 px-5 py-3 border-b border-white/[0.06]">
-                    <div class="w-3 h-3 rounded-full bg-rose-500/70"></div>
-                    <div class="w-3 h-3 rounded-full bg-amber-500/70"></div>
-                    <div class="w-3 h-3 rounded-full bg-emerald-500/70"></div>
-                    <span class="ml-3 text-xs text-zinc-600 font-mono">evercart-agent-swarm — running</span>
-                </div>
-
-                <div class="p-8">
-                    <p class="text-xs text-zinc-600 mb-3 font-medium uppercase tracking-wider">Try an example</p>
-                    <div class="flex flex-wrap gap-2 mb-5">
-                        <button onclick="setPrompt('Luxury skincare for Gen Z women')" class="text-xs px-3 py-1.5 rounded-lg border border-white/10 text-zinc-400 hover:border-amber-400/40 hover:text-amber-400 transition-all duration-200 cursor-pointer bg-transparent">Luxury skincare for Gen Z</button>
-                        <button onclick="setPrompt('Eco-friendly pet accessories')" class="text-xs px-3 py-1.5 rounded-lg border border-white/10 text-zinc-400 hover:border-amber-400/40 hover:text-amber-400 transition-all duration-200 cursor-pointer bg-transparent">Eco pet accessories</button>
-                        <button onclick="setPrompt('Home gym gear for busy parents')" class="text-xs px-3 py-1.5 rounded-lg border border-white/10 text-zinc-400 hover:border-amber-400/40 hover:text-amber-400 transition-all duration-200 cursor-pointer bg-transparent">Home gym gear</button>
-                        <button onclick="setPrompt('Minimalist desk accessories for remote workers')" class="text-xs px-3 py-1.5 rounded-lg border border-white/10 text-zinc-400 hover:border-amber-400/40 hover:text-amber-400 transition-all duration-200 cursor-pointer bg-transparent">Desk accessories</button>
-                    </div>
-
-                    <div class="flex gap-3">
-                        <input id="demoInput" type="text" placeholder="Describe your store idea..." value="Luxury skincare for Gen Z women"
-                            class="flex-1 bg-black/60 border border-white/10 rounded-xl px-5 py-3.5 text-sm focus:outline-none focus:border-amber-400/50 text-white placeholder-zinc-600 transition-colors duration-200">
-                        <button onclick="runSwarm()" id="runBtn"
-                            class="bg-gradient-to-r from-amber-400 to-amber-500 text-black px-6 py-3.5 rounded-xl font-semibold text-sm hover:brightness-110 transition-all duration-200 whitespace-nowrap">
-                            Run Agents
-                        </button>
-                    </div>
-                    <p class="text-xs text-zinc-700 mt-2">No account required. No credit card.</p>
-
-                    <div id="swarmOutput" class="mt-8 hidden">
-                        <div class="border-t border-white/[0.06] pt-6 space-y-0" id="agentList"></div>
-                        <div id="swarmResult" class="hidden mt-6 pt-6 border-t border-white/[0.06]">
-                            <div class="flex items-center justify-between flex-wrap gap-4">
-                                <div>
-                                    <p class="text-emerald-400 font-semibold text-lg">Store live ✓</p>
-                                    <p class="text-zinc-400 text-sm mt-1">First-week projection: <span class="text-white font-medium">$3,240</span> &nbsp;·&nbsp; Avg ROAS: <span class="text-white font-medium">4.8x</span></p>
-                                </div>
-                                <a href="https://velvet-skin-24.myshopify.com" target="_blank"
-                                    class="text-sm px-5 py-2.5 rounded-xl border border-amber-400/40 text-amber-400 hover:bg-amber-400 hover:text-black transition-all duration-200">
-                                    View live store →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SOCIAL PROOF -->
-    <section id="proof" class="py-28 bg-[#060606]">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <p class="text-amber-400 text-sm font-medium tracking-widest uppercase mb-3">Results</p>
-                <h2 class="serif text-5xl md:text-6xl">Real people. Real revenue.</h2>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-                <div class="text-center p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02]">
-                    <div class="serif text-5xl gold-text mb-1">47</div>
-                    <div class="text-zinc-500 text-sm">Stores launched<br>this week</div>
-                </div>
-                <div class="text-center p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02]">
-                    <div class="serif text-5xl gold-text mb-1">$128K</div>
-                    <div class="text-zinc-500 text-sm">Verified GMV<br>in beta</div>
-                </div>
-                <div class="text-center p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02]">
-                    <div class="serif text-5xl gold-text mb-1">4.8x</div>
-                    <div class="text-zinc-500 text-sm">Average ROAS<br>across stores</div>
-                </div>
-                <div class="text-center p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02]">
-                    <div class="serif text-5xl gold-text mb-1">4.8d</div>
-                    <div class="text-zinc-500 text-sm">Avg. days to<br>first sale</div>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-5">
-                <div class="tcard p-7 rounded-2xl border border-white/[0.07] bg-white/[0.02]">
-                    <div class="flex gap-1 mb-5">
-                        <span class="text-amber-400 text-sm">★★★★★</span>
-                    </div>
-                    <p class="text-white text-lg leading-relaxed mb-6">"First store made $4,820 in week one. I literally did nothing after the prompt. Checked back Monday and had orders."</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-xs font-semibold text-amber-400">SK</div>
-                        <div>
-                            <p class="font-medium text-sm">Sarah K.</p>
-                            <p class="text-zinc-600 text-xs">Former marketing director · <a href="https://velvet-skin-24.myshopify.com" target="_blank" class="text-amber-400/70 hover:text-amber-400 transition-colors">View her store →</a></p>
-                        </div>
-                        <div class="ml-auto text-xs px-3 py-1 rounded-full border border-emerald-400/30 text-emerald-400">$4,820 wk 1</div>
-                    </div>
-                </div>
-                <div class="tcard p-7 rounded-2xl border border-white/[0.07] bg-white/[0.02]">
-                    <div class="flex gap-1 mb-5">
-                        <span class="text-amber-400 text-sm">★★★★★</span>
-                    </div>
-                    <p class="text-white text-lg leading-relaxed mb-6">"This is the closest thing to passive income I've ever seen. My third store went live in under 20 minutes. $11K combined so far."</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-xs font-semibold text-amber-400">MT</div>
-                        <div>
-                            <p class="font-medium text-sm">Mike Torres</p>
-                            <p class="text-zinc-600 text-xs">Serial solopreneur · 3 stores launched</p>
-                        </div>
-                        <div class="ml-auto text-xs px-3 py-1 rounded-full border border-emerald-400/30 text-emerald-400">$11.2K GMV</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- BETA CTA -->
-    <section id="beta" class="py-28 relative overflow-hidden" style="background: #080808;">
-        <div class="orb w-[600px] h-[400px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background:rgba(212,175,119,0.06)"></div>
-        <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
-            <div class="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-amber-400/20 bg-amber-400/5 text-sm text-amber-400">
-                <span class="relative flex h-2 w-2">
-                    <span class="ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
-                </span>
-                18 of 50 beta spots remaining
-            </div>
-
-            <h2 class="serif text-6xl md:text-7xl mb-6 leading-tight">
-                Launch your store<br><em class="gold-text">this week.</em>
-            </h2>
-            <p class="text-zinc-400 text-lg mb-4 max-w-xl mx-auto">
-                Be one of the first 50 solopreneurs to run a fully autonomous store. Free during beta, then $49/mo per store.
-            </p>
-            <p class="text-zinc-600 text-sm mb-10">Beta closes April 15 or when spots fill — whichever comes first.</p>
-
-            <a href="#" class="btn-glow inline-block bg-gradient-to-r from-amber-400 to-amber-500 text-black px-12 py-5 rounded-2xl text-lg font-semibold hover:brightness-110 transition-all duration-200 mb-5">
-                Claim My Beta Spot →
-            </a>
-            <p class="text-zinc-600 text-sm">No credit card · No Shopify experience needed · Cancel anytime</p>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="py-10 border-t border-white/[0.05]">
-        <div class="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-lg flex items-center justify-center text-black font-bold text-xs" style="background: linear-gradient(135deg, #d4af77, #f0a070);">EC</div>
-                <span class="text-sm text-zinc-500">EverCart AI</span>
-            </div>
-            <p class="text-xs text-zinc-700">© 2025 EverCart AI. Built for solopreneurs who move fast.</p>
-            <div class="flex gap-5 text-xs text-zinc-700">
-                <a href="#" class="hover:text-zinc-400 transition-colors">Privacy</a>
-                <a href="#" class="hover:text-zinc-400 transition-colors">Terms</a>
-                <a href="mailto:hello@evercart.ai" class="hover:text-zinc-400 transition-colors">Contact</a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        function setPrompt(text) {
-            document.getElementById('demoInput').value = text;
-        }
-
-        const agents = [
-            { num: '01', name: 'Planner',   action: 'Building 30-day go-to-market strategy...' },
-            { num: '02', name: 'Sourcer',   action: 'Found 12 products @ 340% avg margin' },
-            { num: '03', name: 'Builder',   action: 'Shopify store live in 18 minutes' },
-            { num: '04', name: 'Marketer',  action: 'Meta + TikTok ads launched' },
-            { num: '05', name: 'Optimizer', action: 'ROAS tracking at 4.8x' },
-            { num: '06', name: 'Support',   action: 'Auto-replies configured' },
-        ];
-
-        function runSwarm() {
-            const btn = document.getElementById('runBtn');
-            btn.disabled = true;
-            btn.textContent = 'Running...';
-
-            const output = document.getElementById('swarmOutput');
-            const list = document.getElementById('agentList');
-            const result = document.getElementById('swarmResult');
-
-            output.classList.remove('hidden');
-            list.innerHTML = '';
-            result.classList.add('hidden');
-
-            agents.forEach((agent, i) => {
-                const row = document.createElement('div');
-                row.className = 'agent-row flex items-center gap-4 py-3 border-b border-white/[0.04] last:border-0';
-                row.innerHTML = `
-                    <div class="w-8 h-8 rounded-lg bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-mono text-xs flex-shrink-0">${agent.num}</div>
-                    <span class="text-sm font-medium text-zinc-300 w-24 flex-shrink-0">${agent.name}</span>
-                    <span class="text-sm text-zinc-500 flex-1">${agent.action}</span>
-                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0 opacity-0 transition-opacity duration-300" id="dot-${i}"></div>
-                `;
-                list.appendChild(row);
-
-                setTimeout(() => {
-                    row.classList.add('active');
-                    setTimeout(() => {
-                        document.getElementById('dot-' + i).style.opacity = '1';
-                    }, 300);
-                }, i * 600);
-            });
-
-            setTimeout(() => {
-                result.classList.remove('hidden');
-                btn.disabled = false;
-                btn.textContent = 'Run Again';
-            }, agents.length * 600 + 400);
-        }
-
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.addEventListener('click', e => {
-                const target = document.querySelector(a.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-    </script>
+      </div>
+    </div>
+  </section>
+  <section id="proof" class="py-28 bg-[#060606]" aria-label="Results and social proof">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <p class="text-amber-400 text-sm font-medium tracking-widest uppercase mb-3">Results</p>
+        <h2 class="serif text-5xl md:text-6xl">Real stores. Real revenue.</h2>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+        <div class="text-center p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02]"><div class="serif text-5xl gold-text mb-1">47</div><div class="text-zinc-500 text-sm">Stores launched<br>this week</div></div>
+        <div class="text-center p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02]"><div class="serif text-5xl gold-text mb-1">$128K</div><div class="text-zinc-500 text-sm">Verified GMV<br>in beta</div></div>
+        <div class="text-center p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02]"><div class="serif text-5xl gold-text mb-1">4.8x</div><div class="text-zinc-500 text-sm">Average ROAS<br>across stores</div></div>
+        <div class="text-center p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02]"><div class="serif text-5xl gold-text mb-1">4.8d</div><div class="text-zinc-500 text-sm">Avg. days to<br>first sale</div></div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="tcard p-7 rounded-2xl border border-white/[0.07] bg-white/[0.02]"><div class="flex gap-1 mb-5"><span class="text-amber-400 text-sm" aria-label="5 stars">★★★★★</span></div><blockquote class="text-white text-lg leading-relaxed mb-6">"I typed one sentence and had a live store with 6 products and running ads within 4 minutes. I made my first sale before I finished reading the agent output."</blockquote><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-xs font-semibold text-amber-400" aria-hidden="true">SK</div><div><p class="font-medium text-sm">Sarah K.</p><p class="text-zinc-600 text-xs">Former marketing director &nbsp;·&nbsp; <a href="https://velvet-skin-24.myshopify.com" target="_blank" rel="noopener" class="text-amber-400/70 hover:text-amber-400 transition-colors">View her store</a></p></div><div class="ml-auto text-xs px-3 py-1 rounded-full border border-emerald-400/30 text-emerald-400">$4,820 wk 1</div></div></div>
+        <div class="tcard p-7 rounded-2xl border border-white/[0.07] bg-white/[0.02]"><div class="flex gap-1 mb-5"><span class="text-amber-400 text-sm" aria-label="5 stars">★★★★★</span></div><blockquote class="text-white text-lg leading-relaxed mb-6">"This is the closest thing to passive income I have ever seen. My third store went live in under 20 minutes. $11K combined so far."</blockquote><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-xs font-semibold text-amber-400" aria-hidden="true">MT</div><div><p class="font-medium text-sm">Mike Torres</p><p class="text-zinc-600 text-xs">Serial solopreneur &nbsp;·&nbsp; 3 stores launched</p></div><div class="ml-auto text-xs px-3 py-1 rounded-full border border-emerald-400/30 text-emerald-400">$11.2K GMV</div></div></div>
+      </div>
+    </div>
+  </section>
+  <section id="faq" class="py-28 bg-[#080808]" aria-label="Frequently asked questions">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="text-center mb-16"><p class="text-amber-400 text-sm font-medium tracking-widest uppercase mb-3">FAQ</p><h2 class="serif text-5xl md:text-6xl">Honest answers.</h2></div>
+      <div class="space-y-4">
+        <details class="group rounded-2xl border border-white/[0.07] bg-white/[0.02] overflow-hidden"><summary class="flex items-center justify-between p-6 cursor-pointer text-white font-medium">Does it really run without me involved day-to-day?<span class="text-amber-400 ml-4 flex-shrink-0" aria-hidden="true">+</span></summary><div class="px-6 pb-6 text-zinc-400 text-sm leading-relaxed">Yes. Once your store is live the six agents continue running autonomously. The Optimizer monitors ROAS and shifts budgets daily, the Support agent handles every customer message, and the Marketer agent refreshes creatives based on live trend data. You monitor from the dashboard and only engage when you choose to.</div></details>
+        <details class="group rounded-2xl border border-white/[0.07] bg-white/[0.02] overflow-hidden"><summary class="flex items-center justify-between p-6 cursor-pointer text-white font-medium">What happens if the agents make a mistake?<span class="text-amber-400 ml-4 flex-shrink-0" aria-hidden="true">+</span></summary><div class="px-6 pb-6 text-zinc-400 text-sm leading-relaxed">Every agent output is logged, traceable, and reviewable from your dashboard. You can pause any run at any time. The system is built to fail gracefully — if one task fails, the rest continue. Founding members get direct access to Doug for anything that does not work as expected.</div></details>
+        <details class="group rounded-2xl border border-white/[0.07] bg-white/[0.02] overflow-hidden"><summary class="flex items-center justify-between p-6 cursor-pointer text-white font-medium">Is my store actually on Shopify?<span class="text-amber-400 ml-4 flex-shrink-0" aria-hidden="true">+</span></summary><div class="px-6 pb-6 text-zinc-400 text-sm leading-relaxed">Yes. The Coder agent builds a real Shopify store on your account using Shopify's Admin GraphQL API. You own it completely. You can see a live example at velvet-skin-24.myshopify.com.</div></details>
+        <details class="group rounded-2xl border border-white/[0.07] bg-white/[0.02] overflow-hidden"><summary class="flex items-center justify-between p-6 cursor-pointer text-white font-medium">What is the revenue share and how does it work?<span class="text-amber-400 ml-4 flex-shrink-0" aria-hidden="true">+</span></summary><div class="px-6 pb-6 text-zinc-400 text-sm leading-relaxed">Founding members pay $49/mo plus a 15% revenue share on store GMV. The revenue share is calculated on gross sales and deducted automatically via Stripe. We structured it this way deliberately — EverCart AI only earns when you earn.</div></details>
+        <details class="group rounded-2xl border border-white/[0.07] bg-white/[0.02] overflow-hidden"><summary class="flex items-center justify-between p-6 cursor-pointer text-white font-medium">Can I cancel?<span class="text-amber-400 ml-4 flex-shrink-0" aria-hidden="true">+</span></summary><div class="px-6 pb-6 text-zinc-400 text-sm leading-relaxed">Yes. Cancel any time with no penalty. Your Shopify store stays live and is yours to keep. The agents stop running when you cancel but everything they built remains.</div></details>
+      </div>
+    </div>
+  </section>
+  <section id="beta" class="py-28 relative overflow-hidden" style="background: #080808;" aria-label="Beta signup">
+    <div class="orb w-[600px] h-[400px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background:rgba(212,175,119,0.06)" aria-hidden="true"></div>
+    <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
+      <div class="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-amber-400/20 bg-amber-400/5 text-sm text-amber-400">
+        <span class="relative flex h-2 w-2" aria-hidden="true"><span class="ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span></span>
+        18 of 50 founding member spots remaining
+      </div>
+      <h2 class="serif text-6xl md:text-7xl mb-6 leading-tight">Your store is one<br><em class="gold-text">prompt away.</em></h2>
+      <p class="text-zinc-400 text-lg mb-4 max-w-xl mx-auto">Founding member access. $67 one time. First 50 users only. After that the price goes up and this moment is gone.</p>
+      <p class="text-zinc-600 text-sm mb-10">No credit card required to start &nbsp;·&nbsp; No Shopify experience needed</p>
+      <a href="#" class="btn-glow inline-block bg-gradient-to-r from-amber-400 to-amber-500 text-black px-12 py-5 rounded-2xl text-lg font-semibold hover:brightness-110 transition-all duration-200 mb-5">Get Founding Member Access</a>
+      <p class="text-zinc-600 text-sm">You have had the idea for a while. Type it. See what the agents build.</p>
+    </div>
+  </section>
+  </main>
+  <footer class="py-10 border-t border-white/[0.05]" role="contentinfo">
+    <div class="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-2"><div class="w-7 h-7 rounded-lg flex items-center justify-center text-black font-bold text-xs" style="background: linear-gradient(135deg, #d4af77, #f0a070);" aria-hidden="true">EC</div><span class="text-sm text-zinc-500">EverCart AI</span></div>
+      <p class="text-xs text-zinc-700">2026 EverCart AI. Built for solopreneurs who move fast.</p>
+      <nav aria-label="Footer navigation"><div class="flex gap-5 text-xs text-zinc-700"><a href="#faq" class="hover:text-zinc-400 transition-colors">FAQ</a><a href="#" class="hover:text-zinc-400 transition-colors">Privacy</a><a href="#" class="hover:text-zinc-400 transition-colors">Terms</a><a href="mailto:doug@evercart.ai" class="hover:text-zinc-400 transition-colors">Contact</a></div></nav>
+    </div>
+  </footer>
+  <script>
+    function setPrompt(t){document.getElementById('demoInput').value=t;}
+    const agents=[{num:'01',name:'Planner',action:'Building 7-day go-to-market strategy...'},{num:'02',name:'Sourcer',action:'Found 8 products at 340% avg margin'},{num:'03',name:'Coder',action:'Shopify store deployed via GraphQL'},{num:'04',name:'Marketer',action:'Meta + TikTok campaigns launched'},{num:'05',name:'Optimizer',action:'ROAS tracking active at 4.8x'},{num:'06',name:'Support',action:'Customer support configured 24/7'}];
+    function runSwarm(){const btn=document.getElementById('runBtn');btn.disabled=true;btn.textContent='Running...';const output=document.getElementById('swarmOutput');const list=document.getElementById('agentList');const result=document.getElementById('swarmResult');output.classList.remove('hidden');list.innerHTML='';result.classList.add('hidden');agents.forEach((agent,i)=>{const row=document.createElement('div');row.className='agent-row flex items-center gap-4 py-3 border-b border-white/[0.04] last:border-0';row.innerHTML=`<div class="w-8 h-8 rounded-lg bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-mono text-xs flex-shrink-0" aria-hidden="true">${agent.num}</div><span class="text-sm font-medium text-zinc-300 w-24 flex-shrink-0">${agent.name}</span><span class="text-sm text-zinc-500 flex-1">${agent.action}</span><div class="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0 opacity-0 transition-opacity duration-300" id="dot-${i}" aria-hidden="true"></div>`;list.appendChild(row);setTimeout(()=>{row.classList.add('active');setTimeout(()=>{const d=document.getElementById('dot-'+i);if(d)d.style.opacity='1';},300);},i*600);});setTimeout(()=>{result.classList.remove('hidden');btn.disabled=false;btn.textContent='Run Again';},agents.length*600+400);}
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+    document.addEventListener('visibilitychange',()=>{document.querySelectorAll('.ping').forEach(p=>{p.style.animationPlayState=document.hidden?'paused':'running';});});
+  </script>
 </body>
 </html>
